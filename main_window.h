@@ -13,7 +13,7 @@ namespace xml_viewer
 
         public:
 
-            Main_window(const char* file_name);
+            Main_window(const QString& file_name, bool render_html);
 
             QSize sizeHint() const override
             {

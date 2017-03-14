@@ -7,6 +7,6 @@ TARGET = xml_viewer
 INCLUDEPATH += .
 
 # Input
-HEADERS += main_window.h utils.h xml_tree.h xml_node_display.h
-SOURCES += main.cpp main_window.cpp xml_tree.cpp xml_node_display.cpp
+HEADERS += main_window.h utils.h xml_tree.h xml_node_display.h html_display.h
+SOURCES += main.cpp utils.cpp main_window.cpp xml_tree.cpp xml_node_display.cpp html_display.cpp
 QT += widgets xml

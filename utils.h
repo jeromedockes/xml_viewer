@@ -3,7 +3,9 @@
 
 #include <memory>
 
+#include <QApplication>
 #include <Qt>
+#include <QCommandLineParser>
 
 
 namespace xml_viewer
@@ -16,6 +18,17 @@ namespace xml_viewer
         }
 
     enum User_roles {first_user_role = Qt::UserRole, is_element};
+
+
+    struct Command_line_options{
+
+        QString file_name;
+        bool render_html;
+
+    };
+
+    Command_line_options get_command_line_options(const QApplication& app);
+
 }
 
 #endif

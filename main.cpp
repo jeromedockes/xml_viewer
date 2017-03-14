@@ -1,16 +1,15 @@
 #include <QApplication>
 
+#include "utils.h"
 #include "main_window.h"
 
 
 int main(int argc, char* argv[])
 {
-    if(!(argc > 1)){
-        return 1;
-    }
     QApplication app{argc, argv};
-
-    xml_viewer::Main_window main_window{argv[1]};
+    auto cli_options = xml_viewer::get_command_line_options(app);
+    xml_viewer::Main_window main_window(cli_options.file_name,
+            cli_options.render_html);
     main_window.show();
 
     return app.exec();
