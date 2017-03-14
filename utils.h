@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <Qt>
+
 
 namespace xml_viewer
 {
@@ -12,6 +14,8 @@ namespace xml_viewer
         {
            return std::unique_ptr<T>(new T(std::forward<Args>(args)... ));
         }
+
+    enum User_roles {first_user_role = Qt::UserRole, is_element};
 }
 
 #endif

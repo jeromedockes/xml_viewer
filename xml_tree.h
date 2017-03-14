@@ -5,17 +5,27 @@
 #include <QTreeWidget>
 #include <QLabel>
 #include <QFileSystemWatcher>
+#include <memory>
 
 namespace xml_viewer
 {
 
     class XML_tree: public QTreeWidget{
 
+        Q_OBJECT
+
+        public:
+            XML_tree();
+
         public slots:
 
             bool load_file(const QString& file_name);
             bool reload_file(const QString&);
             void watch_again();
+
+        signals:
+
+            void reloaded() const;
 
         private:
 
@@ -28,9 +38,6 @@ namespace xml_viewer
     const QString& element_name_template();
     const QString& attribute_template();
 
-    QTreeWidgetItem*add_widget_child(std::unique_ptr<QWidget>&& new_child,
-            QTreeWidgetItem* parent_node);
-
     void add_dom_node(const QDomNode& dom_node,
             QTreeWidgetItem* widget_node);
 
@@ -42,7 +49,6 @@ namespace xml_viewer
 
     std::unique_ptr<QLabel> make_wrapped_label(const QString& text);
 
-    QString highlight_links(const QString& plain);
 }
 
 #endif

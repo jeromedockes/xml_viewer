@@ -16,21 +16,28 @@
 
 namespace xml_viewer
 {
+    XML_tree::XML_tree()
+    {
+        QFont font(this->font().family(), 25);
+        setFont(font);
+        // setIndentation(indentation() * 2);
+        // setWordWrap(true);
+    }
 
     const QString& element_name_template()
     {
-        static const QString highlighted = QString(
-                "<b><font color=blue>%1</font></b>");
+        static const QString template_string = QString(
+                "%1");
 
-        return highlighted;
+        return template_string;
     }
 
     const QString& attribute_template()
     {
-        static const QString highlighted = QString(
-                "%1 <font color=DarkOrange>%2</font>=%3");
+        static const QString template_string = QString(
+                "%1 %2=%3");
 
-        return highlighted;
+        return template_string;
     }
 
     bool XML_tree::load_file(const QString& file_name)
@@ -48,6 +55,8 @@ namespace xml_viewer
         }
         auto dom_root{document.documentElement()};
         build_widget_tree(dom_root);
+        setHeaderLabels(QStringList{file_name});
+        emit reloaded();
         return true;
     }
 
@@ -93,56 +102,22 @@ namespace xml_viewer
         add_dom_node(dom_root, invisibleRootItem());
     }
 
-    QString highlight_links(const QString& plain)
-    {
-        return QString(plain).replace(
-                QRegularExpression("(https?://\\S+)"),
-                QString("<a href='\\1'>\\1</a>"));
-    }
-
     void add_dom_attribute(const QDomAttr& dom_attribute,
             QTreeWidgetItem* widget_node)
     {
-        auto label = static_cast<QLabel*>(
-                widget_node->treeWidget()->itemWidget(widget_node, 0));
-        label->setText(attribute_template().arg(
-                    QString(label->text()),
+        widget_node->setText(0, attribute_template().arg(
+                    QString(widget_node->text(0)),
                     QString(dom_attribute.name()),
                     QString(dom_attribute.value())).simplified());
-    }
-
-    QTreeWidgetItem* add_widget_child(std::unique_ptr<QWidget>&& new_child,
-            QTreeWidgetItem* parent_node)
-    {
-        auto new_widget_node_handle = make_unique<QTreeWidgetItem>();
-        auto new_widget_node = new_widget_node_handle.get();
-        parent_node->addChild(new_widget_node_handle.release());
-        auto tree_widget = parent_node->treeWidget();
-        tree_widget->setItemWidget(new_widget_node, 0, new_child.release());
-        return new_widget_node;
-    }
-
-    std::unique_ptr<QLabel> make_wrapped_label(const QString& text)
-    {
-        auto label = make_unique<QLabel>(text);
-        label->setTextFormat(Qt::RichText);
-        label->setWordWrap(true);
-        QFont font(label->font().family(), 25);
-        label->setFont(font);
-        label->setTextInteractionFlags(
-                Qt::TextBrowserInteraction | Qt::TextSelectableByKeyboard);
-        // label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        label->setOpenExternalLinks(true);
-
-        return std::move(label);
     }
 
     void add_dom_text_node(const QDomText& dom_text_node,
             QTreeWidgetItem* widget_node)
     {
-        auto text = highlight_links(dom_text_node.data().simplified());
-        auto label = make_wrapped_label(text);
-        add_widget_child(std::move(label), widget_node);
+        auto new_child = make_unique<QTreeWidgetItem>(
+                QStringList{dom_text_node.data().simplified()});
+        new_child->setData(0, User_roles::is_element, false);
+        widget_node->addChild(new_child.release());
     }
 
     void add_dom_node(const QDomNode& dom_node,
@@ -153,10 +128,12 @@ namespace xml_viewer
         }
         if(dom_node.isElement()){
             auto dom_element{dom_node.toElement()};
-            auto label = make_wrapped_label(
-                    element_name_template().arg(dom_element.tagName()));
-            auto new_widget_node = add_widget_child(
-                    std::move(label), widget_node);
+            auto text = element_name_template().arg(dom_element.tagName());
+            auto new_child = make_unique<QTreeWidgetItem>(
+                    QStringList{text});
+            new_child->setData(0, User_roles::is_element, true);
+            auto new_widget_node = new_child.get();
+            widget_node->addChild(new_child.release());
             auto attributes = dom_element.attributes();
             auto n_attributes = attributes.size();
             for(int i = 0; i != n_attributes; ++i){
