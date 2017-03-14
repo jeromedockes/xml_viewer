@@ -5,12 +5,9 @@
 #include <QBoxLayout>
 #include <QDomDocument>
 #include <QFile>
-#include <QDir>
 #include <QFont>
-#include <QFileInfo>
 #include <QRegularExpression>
 
-#include "utils.h"
 #include "xml_tree.h"
 
 
@@ -18,6 +15,12 @@ namespace xml_viewer
 {
     XML_tree::XML_tree()
     {
+        file_watcher_ = make_unique<File_watcher>();
+        QObject::connect(
+                file_watcher_->get_fs_watcher(),
+                &QFileSystemWatcher::fileChanged,
+                this, &XML_tree::load_file);
+
         QFont font(this->font().family(), 25);
         setFont(font);
         // setIndentation(indentation() * 2);
@@ -42,7 +45,9 @@ namespace xml_viewer
 
     bool XML_tree::load_file(const QString& file_name)
     {
-        set_doc_file(file_name);
+        std::cout << "load file: " << file_name.toStdString() << std::endl;
+
+        file_watcher_->set_file(file_name);
 
         QFile file{file_name};
         if(!file.open(QIODevice::ReadOnly)){
@@ -60,41 +65,6 @@ namespace xml_viewer
         return true;
     }
 
-    bool XML_tree::reload_file(const QString& path)
-    {
-        std::cout << "reloading " << doc_file_.toStdString() << std::endl
-            << "because " << path.toStdString() << " changed" << std::endl;
-        return load_file(doc_file_);
-    }
-
-    void XML_tree::watch_again()
-    {
-        if(file_watcher_ == nullptr){
-            return;
-        }
-        file_watcher_->addPath(doc_file_);
-    }
-
-    void XML_tree::set_doc_file(const QString& new_doc_file)
-    {
-        QFileInfo file_info{new_doc_file};
-        doc_file_ = new_doc_file;
-        auto directory = file_info.absoluteDir().absolutePath();
-        if(file_watcher_ == nullptr){
-            file_watcher_ = make_unique<QFileSystemWatcher>(
-                    QStringList{new_doc_file, directory});
-            QObject::connect(
-                    file_watcher_.get(), &QFileSystemWatcher::fileChanged,
-                    this, &XML_tree::reload_file);
-            QObject::connect(
-                    file_watcher_.get(), &QFileSystemWatcher::directoryChanged,
-                    this, &XML_tree::watch_again);
-            return;
-        }
-        file_watcher_->removePaths(file_watcher_->files());
-        file_watcher_->removePaths(file_watcher_->directories());
-        file_watcher_->addPaths(QStringList{new_doc_file, directory});
-    }
 
     void XML_tree::build_widget_tree(const QDomElement& dom_root)
     {

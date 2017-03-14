@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_xml_viewer__XML_tree_t {
-    QByteArrayData data[7];
-    char stringdata0[75];
+    QByteArrayData data[5];
+    char stringdata0[51];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,13 +35,11 @@ QT_MOC_LITERAL(0, 0, 20), // "xml_viewer::XML_tree"
 QT_MOC_LITERAL(1, 21, 8), // "reloaded"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 9), // "load_file"
-QT_MOC_LITERAL(4, 41, 9), // "file_name"
-QT_MOC_LITERAL(5, 51, 11), // "reload_file"
-QT_MOC_LITERAL(6, 63, 11) // "watch_again"
+QT_MOC_LITERAL(4, 41, 9) // "file_name"
 
     },
     "xml_viewer::XML_tree\0reloaded\0\0load_file\0"
-    "file_name\0reload_file\0watch_again"
+    "file_name"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,7 +49,7 @@ static const uint qt_meta_data_xml_viewer__XML_tree[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -59,20 +57,16 @@ static const uint qt_meta_data_xml_viewer__XML_tree[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   34,    2, 0x06 /* Public */,
+       1,    0,   24,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   35,    2, 0x0a /* Public */,
-       5,    1,   38,    2, 0x0a /* Public */,
-       6,    0,   41,    2, 0x0a /* Public */,
+       3,    1,   25,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
 
  // slots: parameters
     QMetaType::Bool, QMetaType::QString,    4,
-    QMetaType::Bool, QMetaType::QString,    2,
-    QMetaType::Void,
 
        0        // eod
 };
@@ -86,9 +80,6 @@ void xml_viewer::XML_tree::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         case 0: _t->reloaded(); break;
         case 1: { bool _r = _t->load_file((*reinterpret_cast< const QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 2: { bool _r = _t->reload_file((*reinterpret_cast< const QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 3: _t->watch_again(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -129,13 +120,13 @@ int xml_viewer::XML_tree::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 4;
+        _id -= 2;
     }
     return _id;
 }

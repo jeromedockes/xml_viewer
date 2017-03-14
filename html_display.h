@@ -3,7 +3,8 @@
 
 #include <QTextBrowser>
 #include <QString>
-#include <QFileSystemWatcher>
+
+#include "utils.h"
 
 namespace xml_viewer
 {
@@ -15,16 +16,9 @@ namespace xml_viewer
            HTML_display();
            bool load_file(const QString& file_name);
 
-       public slots:
-
-           void watch_again();
-
         private:
 
-            void set_doc_file(const QString& new_doc_file);
-
-            QString doc_file_{};
-            std::unique_ptr<QFileSystemWatcher> file_watcher_{};
+           std::unique_ptr<File_watcher> file_watcher_{};
     };
 }
 

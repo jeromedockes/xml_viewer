@@ -4,8 +4,9 @@
 #include <QDomElement>
 #include <QTreeWidget>
 #include <QLabel>
-#include <QFileSystemWatcher>
 #include <memory>
+
+#include "utils.h"
 
 namespace xml_viewer
 {
@@ -20,8 +21,6 @@ namespace xml_viewer
         public slots:
 
             bool load_file(const QString& file_name);
-            bool reload_file(const QString&);
-            void watch_again();
 
         signals:
 
@@ -30,9 +29,7 @@ namespace xml_viewer
         private:
 
             void build_widget_tree(const QDomElement& dom_root);
-            void set_doc_file(const QString& new_doc_file);
-            QString doc_file_{};
-            std::unique_ptr<QFileSystemWatcher> file_watcher_{};
+            std::unique_ptr<File_watcher> file_watcher_{};
     };
 
     const QString& element_name_template();

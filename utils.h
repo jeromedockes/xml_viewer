@@ -6,6 +6,7 @@
 #include <QApplication>
 #include <Qt>
 #include <QCommandLineParser>
+#include <QFileSystemWatcher>
 
 
 namespace xml_viewer
@@ -29,6 +30,26 @@ namespace xml_viewer
 
     Command_line_options get_command_line_options(const QApplication& app);
 
+    class File_watcher: public QObject {
+
+        Q_OBJECT
+
+        public:
+
+            File_watcher();
+
+            void set_file(const QString& file_name);
+            const QFileSystemWatcher* get_fs_watcher() const
+            {
+                return fs_watcher_.get();
+            }
+
+        private:
+
+            QString file_name_{};
+            std::unique_ptr<QFileSystemWatcher> fs_watcher_{};
+            void watch_again();
+    };
 }
 
 #endif

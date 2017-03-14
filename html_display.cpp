@@ -1,7 +1,5 @@
-#include <QFileInfo>
-#include <QDir>
+#include <iostream>
 
-#include "utils.h"
 #include "html_display.h"
 
 namespace xml_viewer
@@ -9,45 +7,27 @@ namespace xml_viewer
 
     HTML_display::HTML_display()
     {
+        file_watcher_ = make_unique<File_watcher>();
+        QObject::connect(
+                file_watcher_->get_fs_watcher(),
+                &QFileSystemWatcher::fileChanged,
+                this, &HTML_display::load_file);
+
         QFont font(this->font().family(), 25);
         setFont(font);
-
+        // setLineWrapMode(QTextEdit::NoWrap);
+        setStyleSheet(
+                "border-style: 'solid'; border-color: 'black'; border: 2;");
     }
 
     bool HTML_display::load_file(const QString& file_name)
     {
+        std::cout << "load file: " << file_name.toStdString() << std::endl;
         clear();
-        set_doc_file(file_name);
+        file_watcher_->set_file(file_name);
         setSource(file_name);
+        // std::cout << toHtml().toStdString() << std::endl;
         return true;
     }
 
-    void HTML_display::watch_again()
-    {
-        if(file_watcher_ == nullptr){
-            return;
-        }
-        file_watcher_->addPath(doc_file_);
-    }
-
-    void HTML_display::set_doc_file(const QString& new_doc_file)
-    {
-        QFileInfo file_info{new_doc_file};
-        doc_file_ = new_doc_file;
-        auto directory = file_info.absoluteDir().absolutePath();
-        if(file_watcher_ == nullptr){
-            file_watcher_ = make_unique<QFileSystemWatcher>(
-                    QStringList{new_doc_file, directory});
-            QObject::connect(
-                    file_watcher_.get(), &QFileSystemWatcher::fileChanged,
-                    this, &HTML_display::reload);
-            QObject::connect(
-                    file_watcher_.get(), &QFileSystemWatcher::directoryChanged,
-                    this, &HTML_display::watch_again);
-            return;
-        }
-        file_watcher_->removePaths(file_watcher_->files());
-        file_watcher_->removePaths(file_watcher_->directories());
-        file_watcher_->addPaths(QStringList{new_doc_file, directory});
-    }
 }
