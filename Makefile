@@ -1004,14 +1004,19 @@ main_window.o: main_window.cpp utils.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qrubberband.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreewidgetitemiterator.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/QFileSystemWatcher \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qfilesystemwatcher.h \
 		main_window.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QMainWindow \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qmainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main_window.o main_window.cpp
 
-xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
-		../../.local/Qt/5.8/gcc_64/include/QtXml/qdom.h \
-		../../.local/Qt/5.8/gcc_64/include/QtXml/qtxmlglobal.h \
+xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtWidgets/QBoxLayout \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -1034,21 +1039,19 @@ xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../.local/Qt/5.8/gcc_64/include/QtXml/qtxml-config.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qlayout.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qstring.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qchar.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qrefcount.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qarraydata.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qstringbuilder.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/QFile \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qfile.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qobject.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qlist.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qalgorithms.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qiterator.h \
@@ -1064,27 +1067,17 @@ xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		utils.h \
-		xml_tree.h \
-		../../.local/Qt/5.8/gcc_64/include/QtXml/QDomElement \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QTreeWidget \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreewidget.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreeview.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qrect.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qmargins.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qsize.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qwidget.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qwindowdefs.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qmargins.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpaintdevice.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qrect.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qsize.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpalette.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qrgb.h \
@@ -1095,6 +1088,7 @@ xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpolygon.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qregion.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qline.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qtransform.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpainterpath.h \
@@ -1108,7 +1102,6 @@ xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qfont.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qfontmetrics.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qfontinfo.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qcursor.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qkeysequence.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qevent.h \
@@ -1121,8 +1114,25 @@ xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qurl.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qfile.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qvector2d.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
+		../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
+		../../.local/Qt/5.8/gcc_64/include/QtXml/qdom.h \
+		../../.local/Qt/5.8/gcc_64/include/QtXml/qtxmlglobal.h \
+		../../.local/Qt/5.8/gcc_64/include/QtXml/qtxml-config.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/QFile \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/QFont \
+		utils.h \
+		xml_tree.h \
+		../../.local/Qt/5.8/gcc_64/include/QtXml/QDomElement \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QTreeWidget \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreewidget.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreeview.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qitemselectionmodel.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
@@ -1137,7 +1147,11 @@ xml_tree.o: xml_tree.cpp ../../.local/Qt/5.8/gcc_64/include/QtXml/QDomDocument \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtabbar.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qrubberband.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreewidgetitemiterator.h
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreewidgetitemiterator.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QLabel \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qlabel.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/QFileSystemWatcher \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qfilesystemwatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o xml_tree.o xml_tree.cpp
 
 moc_main_window.o: moc_main_window.cpp 

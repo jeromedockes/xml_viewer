@@ -5,11 +5,11 @@
 namespace xml_viewer
 {
 
-    Main_window::Main_window()
+    Main_window::Main_window(const char* file_name)
         :QMainWindow{} {
 
             auto xml_tree = make_unique<XML_tree>();
-            xml_tree->load_file("/home/jerome/workspace/cognitive_structure/topic_models/xml/jats_full.xml");
+            xml_tree->load_file(file_name);
             setCentralWidget(xml_tree.release());
         }
 }
