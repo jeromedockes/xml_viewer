@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QFont>
 #include <QFileInfo>
+#include <QRegularExpression>
 
 #include "utils.h"
 #include "xml_tree.h"
@@ -16,24 +17,20 @@
 namespace xml_viewer
 {
 
-    const QString& element_name_template(bool highlight)
+    const QString& element_name_template()
     {
         static const QString highlighted = QString(
                 "<b><font color=blue>%1</font></b>");
 
-        static const QString plain = QString("%1");
-
-        return highlight ? highlighted : plain;
+        return highlighted;
     }
 
-    const QString& attribute_template(bool highlight)
+    const QString& attribute_template()
     {
         static const QString highlighted = QString(
                 "%1 <font color=DarkOrange>%2</font>=%3");
 
-        static const QString plain = QString("%1 %2=%3");
-
-        return highlight ? highlighted : plain;
+        return highlighted;
     }
 
     bool XML_tree::load_file(const QString& file_name)
@@ -93,15 +90,22 @@ namespace xml_viewer
     void XML_tree::build_widget_tree(const QDomElement& dom_root)
     {
         clear();
-        add_dom_node(dom_root, invisibleRootItem(), highlight_text_);
+        add_dom_node(dom_root, invisibleRootItem());
+    }
+
+    QString highlight_links(const QString& plain)
+    {
+        return QString(plain).replace(
+                QRegularExpression("(https?://\\S+)"),
+                QString("<a href='\\1'>\\1</a>"));
     }
 
     void add_dom_attribute(const QDomAttr& dom_attribute,
-            QTreeWidgetItem* widget_node, bool highlight)
+            QTreeWidgetItem* widget_node)
     {
         auto label = static_cast<QLabel*>(
                 widget_node->treeWidget()->itemWidget(widget_node, 0));
-        label->setText(attribute_template(highlight).arg(
+        label->setText(attribute_template().arg(
                     QString(label->text()),
                     QString(dom_attribute.name()),
                     QString(dom_attribute.value())).simplified());
@@ -118,66 +122,56 @@ namespace xml_viewer
         return new_widget_node;
     }
 
-    std::unique_ptr<QLabel> make_wrapped_label(
-            const QString& text, bool highlight)
+    std::unique_ptr<QLabel> make_wrapped_label(const QString& text)
     {
         auto label = make_unique<QLabel>(text);
-        if(highlight){
-         label->setTextFormat(Qt::RichText);
-        }
-        else{
-         label->setTextFormat(Qt::PlainText);
-        }
+        label->setTextFormat(Qt::RichText);
         label->setWordWrap(true);
         QFont font(label->font().family(), 25);
         label->setFont(font);
         label->setTextInteractionFlags(
                 Qt::TextBrowserInteraction | Qt::TextSelectableByKeyboard);
         // label->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        // label->setOpenExternalLinks(true);
+        label->setOpenExternalLinks(true);
 
         return std::move(label);
     }
 
     void add_dom_text_node(const QDomText& dom_text_node,
-            QTreeWidgetItem* widget_node, bool highlight)
+            QTreeWidgetItem* widget_node)
     {
-        auto label = make_wrapped_label(
-                dom_text_node.data().simplified(), highlight);
-        auto label_ptr = label.get();
+        auto text = highlight_links(dom_text_node.data().simplified());
+        auto label = make_wrapped_label(text);
         add_widget_child(std::move(label), widget_node);
-        label_ptr->adjustSize();
     }
 
     void add_dom_node(const QDomNode& dom_node,
-            QTreeWidgetItem* widget_node, bool highlight)
+            QTreeWidgetItem* widget_node)
     {
         if(dom_node.isAttr()){
-            return add_dom_attribute(
-                    dom_node.toAttr(), widget_node, highlight);
+            return add_dom_attribute(dom_node.toAttr(), widget_node);
         }
         if(dom_node.isElement()){
             auto dom_element{dom_node.toElement()};
             auto label = make_wrapped_label(
-                    element_name_template(highlight).arg(
-                        dom_element.tagName()), highlight);
+                    element_name_template().arg(dom_element.tagName()));
             auto new_widget_node = add_widget_child(
                     std::move(label), widget_node);
             auto attributes = dom_element.attributes();
             auto n_attributes = attributes.size();
             for(int i = 0; i != n_attributes; ++i){
-                add_dom_node(attributes.item(i), new_widget_node, highlight);
+                add_dom_node(attributes.item(i), new_widget_node);
             }
             auto children = dom_element.childNodes();
             auto n_children = children.size();
             for(int i = 0; i != n_children; ++i){
-                add_dom_node(children.item(i), new_widget_node, highlight);
+                add_dom_node(children.item(i), new_widget_node);
             }
             return;
         }
         if(dom_node.isText()){
             return add_dom_text_node(
-                    dom_node.toText(), widget_node, highlight);
+                    dom_node.toText(), widget_node);
         }
         // processing instructions, comments, namespace: ignored
         // document: not added, only root node is added
