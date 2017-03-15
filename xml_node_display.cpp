@@ -22,7 +22,7 @@ namespace xml_viewer
 
     QString highlighted_text(const QTreeWidgetItem* item)
     {
-        QString text{item->text(0)};
+        QString text{item->text(0).toHtmlEscaped()};
 
         if(item->data(0, User_roles::is_element).toBool()){
             text.replace(QRegularExpression("(\\S*)=(\\S*)"),
