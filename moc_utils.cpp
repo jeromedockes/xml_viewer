@@ -88,5 +88,73 @@ int xml_viewer::File_watcher::qt_metacall(QMetaObject::Call _c, int _id, void **
         return _id;
     return _id;
 }
+struct qt_meta_stringdata_xml_viewer__Editor_mappings_t {
+    QByteArrayData data[1];
+    char stringdata0[28];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_xml_viewer__Editor_mappings_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_xml_viewer__Editor_mappings_t qt_meta_stringdata_xml_viewer__Editor_mappings = {
+    {
+QT_MOC_LITERAL(0, 0, 27) // "xml_viewer::Editor_mappings"
+
+    },
+    "xml_viewer::Editor_mappings"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_xml_viewer__Editor_mappings[] = {
+
+ // content:
+       7,       // revision
+       0,       // classname
+       0,    0, // classinfo
+       0,    0, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       0,       // signalCount
+
+       0        // eod
+};
+
+void xml_viewer::Editor_mappings::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+{
+    Q_UNUSED(_o);
+    Q_UNUSED(_id);
+    Q_UNUSED(_c);
+    Q_UNUSED(_a);
+}
+
+const QMetaObject xml_viewer::Editor_mappings::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_xml_viewer__Editor_mappings.data,
+      qt_meta_data_xml_viewer__Editor_mappings,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+};
+
+
+const QMetaObject *xml_viewer::Editor_mappings::metaObject() const
+{
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+}
+
+void *xml_viewer::Editor_mappings::qt_metacast(const char *_clname)
+{
+    if (!_clname) return Q_NULLPTR;
+    if (!strcmp(_clname, qt_meta_stringdata_xml_viewer__Editor_mappings.stringdata0))
+        return static_cast<void*>(const_cast< Editor_mappings*>(this));
+    return QObject::qt_metacast(_clname);
+}
+
+int xml_viewer::Editor_mappings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QObject::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    return _id;
+}
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

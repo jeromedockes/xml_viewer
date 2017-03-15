@@ -17,6 +17,9 @@ namespace xml_viewer
 
             void display_node_text(const QTreeWidgetItem* new_node);
 
+        private:
+
+            std::unique_ptr<Editor_mappings> mappings_filter_{};
     };
 
     QString highlighted_text(const QTreeWidgetItem* item);

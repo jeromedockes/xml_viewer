@@ -11,7 +11,8 @@ namespace xml_viewer
         setFont(font);
         setTextInteractionFlags(
                 Qt::TextBrowserInteraction | Qt::TextSelectableByKeyboard);
-        // setOpenExternalLinks(true);
+        mappings_filter_ = make_unique<Editor_mappings>();
+        installEventFilter(mappings_filter_.get());
     }
 
     void XML_node_display::display_node_text(const QTreeWidgetItem* new_node)

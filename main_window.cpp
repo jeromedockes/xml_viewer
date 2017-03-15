@@ -25,7 +25,7 @@ namespace xml_viewer
 
             auto text_display = make_unique<XML_node_display>();
 
-            QObject::connect(xml_tree.get(), &XML_tree::itemClicked,
+            QObject::connect(xml_tree.get(), &XML_tree::currentItemChanged,
                     text_display.get(), &XML_node_display::display_node_text);
 
             QObject::connect(xml_tree.get(), &XML_tree::reloaded,

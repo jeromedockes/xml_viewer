@@ -30,6 +30,7 @@ namespace xml_viewer
 
             void build_widget_tree(const QDomElement& dom_root);
             std::unique_ptr<File_watcher> file_watcher_{};
+            std::unique_ptr<Editor_mappings> mappings_filter_{};
     };
 
     const QString& element_name_template();

@@ -23,6 +23,8 @@ namespace xml_viewer
 
         QFont font(this->font().family(), 25);
         setFont(font);
+        mappings_filter_ = make_unique<Editor_mappings>();
+        installEventFilter(mappings_filter_.get());
         // setIndentation(indentation() * 2);
         // setWordWrap(true);
     }

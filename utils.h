@@ -2,12 +2,13 @@
 #define XML_VIEWER_UTILS_H
 
 #include <memory>
+#include <map>
 
 #include <QApplication>
 #include <Qt>
 #include <QCommandLineParser>
 #include <QFileSystemWatcher>
-
+#include <QEvent>
 
 namespace xml_viewer
 {
@@ -49,6 +50,22 @@ namespace xml_viewer
             QString file_name_{};
             std::unique_ptr<QFileSystemWatcher> fs_watcher_{};
             void watch_again();
+    };
+
+    typedef std::pair<int, int> Key_event_summary;
+
+        class Editor_mappings: public QObject{
+
+        Q_OBJECT
+
+        public:
+
+            bool eventFilter(QObject* object, QEvent* event);
+
+        private:
+
+            static std::map<Key_event_summary, int> mappings_;
+
     };
 }
 

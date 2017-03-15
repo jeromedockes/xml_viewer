@@ -19,6 +19,7 @@ namespace xml_viewer
         private:
 
            std::unique_ptr<File_watcher> file_watcher_{};
+           std::unique_ptr<Editor_mappings> mappings_filter_{};
     };
 }
 

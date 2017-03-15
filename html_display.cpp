@@ -7,6 +7,9 @@ namespace xml_viewer
 
     HTML_display::HTML_display()
     {
+        //TODO
+        mappings_filter_ = make_unique<Editor_mappings>();
+        installEventFilter(mappings_filter_.get());
         file_watcher_ = make_unique<File_watcher>();
         QObject::connect(
                 file_watcher_->get_fs_watcher(),
