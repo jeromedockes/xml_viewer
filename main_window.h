@@ -1,8 +1,8 @@
 #ifndef XML_VIEWER_MAIN_WINDOW_H
 #define XML_VIEWER_MAIN_WINDOW_H
 
-
 #include <QMainWindow>
+
 
 namespace xml_viewer
 {
@@ -19,6 +19,13 @@ namespace xml_viewer
             {
                 return QSize(5000, 5000);
             }
+
+
+        private:
+
+            void add_shortcuts();
+            void create_html_viewer(const QString& file_name);
+            void create_xml_viewer(const QString& file_name);
     };
 
 }

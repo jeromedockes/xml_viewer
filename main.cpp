@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QPixmap>
 #include <QIcon>
+#include <QShortcut>
 
 #include "utils.h"
 #include "main_window.h"
