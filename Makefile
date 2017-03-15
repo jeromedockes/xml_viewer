@@ -53,7 +53,8 @@ SOURCES       = main.cpp \
 		main_window.cpp \
 		xml_tree.cpp \
 		xml_node_display.cpp \
-		html_display.cpp moc_main_window.cpp \
+		html_display.cpp qrc_resources.cpp \
+		moc_main_window.cpp \
 		moc_utils.cpp \
 		moc_xml_tree.cpp
 OBJECTS       = main.o \
@@ -62,6 +63,7 @@ OBJECTS       = main.o \
 		xml_tree.o \
 		xml_node_display.o \
 		html_display.o \
+		qrc_resources.o \
 		moc_main_window.o \
 		moc_utils.o \
 		moc_xml_tree.o
@@ -425,6 +427,7 @@ Makefile: xml_viewer.pro ../../.local/Qt/5.8/gcc_64/mkspecs/linux-g++/qmake.conf
 		../../.local/Qt/5.8/gcc_64/mkspecs/features/yacc.prf \
 		../../.local/Qt/5.8/gcc_64/mkspecs/features/lex.prf \
 		xml_viewer.pro \
+		resources.qrc \
 		../../.local/Qt/5.8/gcc_64/lib/libQt5Widgets.prl \
 		../../.local/Qt/5.8/gcc_64/lib/libQt5Gui.prl \
 		../../.local/Qt/5.8/gcc_64/lib/libQt5Xml.prl \
@@ -600,6 +603,7 @@ Makefile: xml_viewer.pro ../../.local/Qt/5.8/gcc_64/mkspecs/linux-g++/qmake.conf
 ../../.local/Qt/5.8/gcc_64/mkspecs/features/yacc.prf:
 ../../.local/Qt/5.8/gcc_64/mkspecs/features/lex.prf:
 xml_viewer.pro:
+resources.qrc:
 ../../.local/Qt/5.8/gcc_64/lib/libQt5Widgets.prl:
 ../../.local/Qt/5.8/gcc_64/lib/libQt5Gui.prl:
 ../../.local/Qt/5.8/gcc_64/lib/libQt5Xml.prl:
@@ -618,6 +622,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../.local/Qt/5.8/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents main_window.h utils.h xml_tree.h xml_node_display.h html_display.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp utils.cpp main_window.cpp xml_tree.cpp xml_node_display.cpp html_display.cpp $(DISTDIR)/
@@ -644,8 +649,14 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_resources.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_resources.cpp
+qrc_resources.cpp: resources.qrc \
+		../../.local/Qt/5.8/gcc_64/bin/rcc \
+		images/x_icon.png
+	/home/jerome/.local/Qt/5.8/gcc_64/bin/rcc -name resources resources.qrc -o qrc_resources.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -1038,7 +1049,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -1149,6 +1160,9 @@ main.o: main.cpp ../../.local/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qguiapplication.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/QPixmap \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/QIcon \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qicon.h \
 		utils.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/Qt \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/QCommandLineParser \
@@ -1159,8 +1173,7 @@ main.o: main.cpp ../../.local/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
 		main_window.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QMainWindow \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qicon.h
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtabwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 utils.o: utils.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QDir \
@@ -1744,11 +1757,11 @@ xml_node_display.o: xml_node_display.cpp utils.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtreewidgetitemiterator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o xml_node_display.o xml_node_display.cpp
 
-html_display.o: html_display.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QFileInfo \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qfileinfo.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qfile.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
+html_display.o: html_display.cpp html_display.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QTextBrowser \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtextbrowser.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qglobal.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qconfig.h \
@@ -1771,10 +1784,18 @@ html_display.o: html_display.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QFile
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qmutex.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qnumeric.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qversiontagging.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qobject.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtextedit.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qwidget.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qwindowdefs.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qobjectdefs.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qnamespace.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qobject.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qstring.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qchar.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qbytearray.h \
@@ -1796,29 +1817,11 @@ html_display.o: html_display.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QFile
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qobject_impl.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qhash.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/QDir \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qdir.h \
-		utils.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qapplication.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtguiglobal.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtgui-config.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qwindowdefs.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qsize.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qcursor.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qwidget.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qmargins.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpaintdevice.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qrect.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qsize.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qpoint.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpalette.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qcolor.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qrgb.h \
@@ -1829,6 +1832,7 @@ html_display.o: html_display.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QFile
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpolygon.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qregion.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qdatastream.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qiodevice.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qline.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qtransform.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpainterpath.h \
@@ -1836,11 +1840,14 @@ html_display.o: html_display.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QFile
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpixelformat.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qpixmap.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qsharedpointer.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qshareddata.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qhash.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qfont.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qfontmetrics.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qfontinfo.h \
 		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qcursor.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qkeysequence.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qevent.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qvariant.h \
@@ -1852,8 +1859,22 @@ html_display.o: html_display.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QFile
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qurl.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qurlquery.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qfile.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qfiledevice.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qvector2d.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qtouchdevice.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextdocument.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextoption.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextcursor.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
+		../../.local/Qt/5.8/gcc_64/include/QtGui/qpen.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/QString \
+		utils.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QApplication \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qapplication.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qcoreapplication.h \
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qeventloop.h \
+		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qguiapplication.h \
 		../../.local/Qt/5.8/gcc_64/include/QtGui/qinputmethod.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/Qt \
@@ -1861,20 +1882,11 @@ html_display.o: html_display.cpp ../../.local/Qt/5.8/gcc_64/include/QtCore/QFile
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qcommandlineparser.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/qcommandlineoption.h \
 		../../.local/Qt/5.8/gcc_64/include/QtCore/QFileSystemWatcher \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/qfilesystemwatcher.h \
-		html_display.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/QTextBrowser \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtextbrowser.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qtextedit.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../.local/Qt/5.8/gcc_64/include/QtWidgets/qframe.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextdocument.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextoption.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextcursor.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qtextformat.h \
-		../../.local/Qt/5.8/gcc_64/include/QtGui/qpen.h \
-		../../.local/Qt/5.8/gcc_64/include/QtCore/QString
+		../../.local/Qt/5.8/gcc_64/include/QtCore/qfilesystemwatcher.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o html_display.o html_display.cpp
+
+qrc_resources.o: qrc_resources.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
 
 moc_main_window.o: moc_main_window.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_main_window.o moc_main_window.cpp
