@@ -22,7 +22,7 @@ namespace xml_viewer
             std::unique_ptr<Editor_mappings> mappings_filter_{};
     };
 
-    QString highlighted_text(const QTreeWidgetItem* item);
+    QString highlighted_text(const QTreeWidgetItem& item);
 }
 
 #endif

@@ -50,19 +50,21 @@ namespace xml_viewer
         std::cout << "load file: " << file_name.toStdString() << std::endl;
 
         file_watcher_->set_file(file_name);
+        setHeaderLabels(QStringList{file_name});
 
         QFile file{file_name};
         if(!file.open(QIODevice::ReadOnly)){
+            clear();
             return false;
         }
 
         QDomDocument document{};
         if(!document.setContent(&file)){
+            clear();
             return false;
         }
         auto dom_root{document.documentElement()};
         build_widget_tree(dom_root);
-        setHeaderLabels(QStringList{file_name});
         emit reloaded();
         return true;
     }

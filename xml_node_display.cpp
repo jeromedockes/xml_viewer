@@ -17,14 +17,18 @@ namespace xml_viewer
 
     void XML_node_display::display_node_text(const QTreeWidgetItem* new_node)
     {
-        setHtml(highlighted_text(new_node));
+        if(new_node == nullptr){
+            clear();
+            return;
+        }
+        setHtml(highlighted_text(*new_node));
     }
 
-    QString highlighted_text(const QTreeWidgetItem* item)
+    QString highlighted_text(const QTreeWidgetItem& item)
     {
-        QString text{item->text(0).toHtmlEscaped()};
+        QString text{item.text(0).toHtmlEscaped()};
 
-        if(item->data(0, User_roles::is_element).toBool()){
+        if(item.data(0, User_roles::is_element).toBool()){
             text.replace(QRegularExpression("(\\S*)=(\\S*)"),
                     QString("<font color=DarkOrange>\\1</font>=\\2"));
 

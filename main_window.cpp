@@ -32,9 +32,6 @@ namespace xml_viewer
         QObject::connect(xml_tree.get(), &XML_tree::currentItemChanged,
                 text_display.get(), &XML_node_display::display_node_text);
 
-        QObject::connect(xml_tree.get(), &XML_tree::reloaded,
-                text_display.get(), &XML_node_display::clear);
-
         central_splitter->addWidget(xml_tree.release());
         central_splitter->addWidget(text_display.release());
         central_splitter->setStretchFactor(0, 1.5);
