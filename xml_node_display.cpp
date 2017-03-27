@@ -29,7 +29,7 @@ namespace xml_viewer
         QString text{item.text(0).toHtmlEscaped()};
 
         if(item.data(0, User_roles::is_element).toBool()){
-            text.replace(QRegularExpression("(\\S*)=(\\S*)"),
+            text.replace(QRegularExpression("(\\S*?)=(\\S*)"),
                     QString("<font color=DarkOrange>\\1</font>=\\2"));
 
             text.replace(QRegularExpression("^\\s*(\\S+)"),
