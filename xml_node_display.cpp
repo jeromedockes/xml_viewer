@@ -37,7 +37,7 @@ namespace xml_viewer
         }
 
         text.replace(
-                QRegularExpression("(https?://\\S+)"),
+                QRegularExpression("((https?|ftp|mailto)://\\S+)"),
                 QString("<a href='\\1'>\\1</a>"));
 
         return QString("<html>%1</html>").arg(text);
