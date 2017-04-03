@@ -17,6 +17,14 @@ namespace xml_viewer
 
             void display_node_text(const QTreeWidgetItem* new_node);
 
+        protected:
+
+            bool focusNextPrevChild(bool next)
+            {
+                (void) next;
+                return false;
+            }
+
         private:
 
             std::unique_ptr<Editor_mappings> mappings_filter_{};
