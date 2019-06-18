@@ -1,18 +1,19 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'utils.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.8.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.13.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
+#include <memory>
 #include "utils.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'utils.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.8.0. It"
+#error "This file was generated using the moc from 5.13.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -41,7 +42,7 @@ QT_MOC_LITERAL(0, 0, 24) // "xml_viewer::File_watcher"
 static const uint qt_meta_data_xml_viewer__File_watcher[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -62,10 +63,14 @@ void xml_viewer::File_watcher::qt_static_metacall(QObject *_o, QMetaObject::Call
     Q_UNUSED(_a);
 }
 
-const QMetaObject xml_viewer::File_watcher::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_xml_viewer__File_watcher.data,
-      qt_meta_data_xml_viewer__File_watcher,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
-};
+QT_INIT_METAOBJECT const QMetaObject xml_viewer::File_watcher::staticMetaObject = { {
+    &QObject::staticMetaObject,
+    qt_meta_stringdata_xml_viewer__File_watcher.data,
+    qt_meta_data_xml_viewer__File_watcher,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *xml_viewer::File_watcher::metaObject() const
@@ -75,17 +80,15 @@ const QMetaObject *xml_viewer::File_watcher::metaObject() const
 
 void *xml_viewer::File_watcher::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_xml_viewer__File_watcher.stringdata0))
-        return static_cast<void*>(const_cast< File_watcher*>(this));
+        return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
 int xml_viewer::File_watcher::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
-    if (_id < 0)
-        return _id;
     return _id;
 }
 struct qt_meta_stringdata_xml_viewer__Editor_mappings_t {
@@ -109,7 +112,7 @@ QT_MOC_LITERAL(0, 0, 27) // "xml_viewer::Editor_mappings"
 static const uint qt_meta_data_xml_viewer__Editor_mappings[] = {
 
  // content:
-       7,       // revision
+       8,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -130,10 +133,14 @@ void xml_viewer::Editor_mappings::qt_static_metacall(QObject *_o, QMetaObject::C
     Q_UNUSED(_a);
 }
 
-const QMetaObject xml_viewer::Editor_mappings::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_xml_viewer__Editor_mappings.data,
-      qt_meta_data_xml_viewer__Editor_mappings,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
-};
+QT_INIT_METAOBJECT const QMetaObject xml_viewer::Editor_mappings::staticMetaObject = { {
+    &QObject::staticMetaObject,
+    qt_meta_stringdata_xml_viewer__Editor_mappings.data,
+    qt_meta_data_xml_viewer__Editor_mappings,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
 
 
 const QMetaObject *xml_viewer::Editor_mappings::metaObject() const
@@ -143,17 +150,15 @@ const QMetaObject *xml_viewer::Editor_mappings::metaObject() const
 
 void *xml_viewer::Editor_mappings::qt_metacast(const char *_clname)
 {
-    if (!_clname) return Q_NULLPTR;
+    if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_xml_viewer__Editor_mappings.stringdata0))
-        return static_cast<void*>(const_cast< Editor_mappings*>(this));
+        return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
 int xml_viewer::Editor_mappings::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
-    if (_id < 0)
-        return _id;
     return _id;
 }
 QT_WARNING_POP
