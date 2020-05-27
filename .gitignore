@@ -1,4 +1,5 @@
 xml_viewer
+!bin/xml_viewer
 *.swp
 *.o
 *.stash
